@@ -1,0 +1,215 @@
+*, ::before, ::after {
+  box-sizing: border-box;
+}
+
+:focus {
+  outline: 0;
+}
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+  font-size: 15px;
+}
+
+.player {
+  background-color: #444;
+  color: #ccc;
+  display: flex;
+  border: 2px solid black;
+  padding: 10px;
+  border-radius: 5px;
+  max-width: 1252px;
+}
+
+.tracklist {  
+  display: flex;
+  padding: 10px 2px;
+  word-wrap: break-word;
+  border: .5px solid #666;
+  border-right: none;
+  width: 186px;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.tracklist__list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tracklist__item {
+  margin-left: 12px;
+}
+
+.tracklist__anchor {
+  text-decoration: none;
+  line-height: 1.55;
+  color: #ccc;
+  font-size: 17px;
+}
+
+.tracklist__anchor:hover {
+  text-decoration: underline;
+  color: white;
+}
+
+.main {
+  padding: 10px 10px 8px 10px;
+  border: .5px solid #666;
+  width: 100%;
+}
+
+.spectrgrm {
+  display: block;
+  margin: 3px 0 7px 0;
+  border: 1px solid #666;
+  width: 100%;
+  height: 200px;
+  border-radius: 10px;
+  /*background-color: blue;*/
+}
+
+.playback-ctrl {
+  display: flex;  
+  align-items: center;
+}
+
+.playback-ctrl input[type="button"] {
+  background-color: transparent;
+  border-radius: 50%;
+  height: 39px;
+  border: 1px solid #bbb ;
+  color: #bbb;
+}
+
+.playback-ctrl input[type="button"]:hover {
+  cursor: pointer;
+  color: white;
+  border: 1px solid white;
+}
+
+.progress-bar {
+  display: flex;
+  position: relative;
+  margin-left: 11px;
+  align-items: center;
+  width: 100%;
+  height: 34px;
+  border-radius: 13px;
+  border: 1px solid #bbb;
+  background-color: transparent;
+}
+
+.progress-bar__line {
+  margin: 0 7px;
+  height: 16px;
+  background-color: #bbb;
+  border-radius: 7px;
+}
+
+.progress-bar__time {
+  color: #ddd;
+  position: absolute;
+  right: 15px;
+  font-weight: 600;
+}
+
+.spec-ctrl {
+  display: flex;
+  margin-bottom:6px;
+}
+
+/*Checkboxes*/
+
+.round {
+  position: relative;
+  display: flex;
+  height: 28px;
+  margin: 0 20px 0 1px;
+}
+
+.round .caption {
+  align-self: center;
+}
+
+.round label {
+  background-color: tranparent;
+  border: 1px solid #bbb;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 28px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 28px;
+}
+
+.round:hover {
+  color: white;
+}
+
+.round:hover label{
+  border-color: white;
+}
+
+.round:hover label:after {
+  border-color: white;
+}
+
+.round label:after {
+  border: 2px solid #bbb;
+  border-top: none;
+  border-right: none;
+  content: "";
+  height: 6px;
+  left: 7px;
+  opacity: 0;
+  position: absolute;
+  top: 8px;
+  transform: rotate(-45deg);
+  width: 12px;
+}
+
+
+.round input[type="checkbox"] {
+  visibility: hidden;
+  margin-right: 16px;
+}
+
+
+.round input[type="checkbox"]:checked + label:after {
+  opacity: 1;
+}
+
+/*Audio input*/
+
+.input-file {
+  cursor: pointer;
+  margin: 0 13px;
+  padding: 9px 0;
+  background: transparent;
+  position:relative;
+  color:#aaa;
+  border: 1px solid #aaa;
+  border-radius: 8px;
+  text-align:center;
+}
+
+.input-file:hover {
+  border: 1px solid white;
+  color: white;
+}
+
+.file-hide {
+  cursor: pointer;
+  position: absolute;
+  z-index: 1000;
+  opacity: 0;
+  right: 0;
+  top: 0;
+  height: 100%;
+  font-size: 24px;
+  width: 100%;
+}

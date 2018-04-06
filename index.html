@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Title</title>
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 16x16px -->
+  <link rel="shortcut icon" href="favicon.ico">
+  <!-- 114x114px with no opacity -->
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+
+<audio id="player"></audio>
+<div class="player">
+  <nav class="tracklist">
+    <ul class="tracklist__list">
+      <li class="tracklist__item"><a class="tracklist__anchor" href="#">My kind wo...mp3</a></li>
+      <li class="tracklist__item"><a class="tracklist__anchor" href="#">Track212312.mp3</a></li>
+      <li class="tracklist__item"><a class="tracklist__anchor" href="#">Track3123.mp3</a></li>
+      <li class="tracklist__item"><a class="tracklist__anchor" href="#">Track4123.mp3</a></li>
+      <li class="tracklist__item"><a class="tracklist__anchor" href="#">Track5123.mp3</a></li>
+    </ul>
+    <div class="input-file">Choose file
+      <input id="fileinput" type="file" class="file-hide" accept="audio/*">
+    </div>
+  </nav>
+  <div class="main">
+    <div class="spec-ctrl">
+      <div class="round">
+        <input type="checkbox" id="pitch" name=drawPitch checked onchange="switch_pitch()">
+        <label for="pitch"></label>
+        <div class="caption">Pitch</div>
+      </div>
+      <div class="round">
+        <input type="checkbox" id="curved" name=drawCurved checked onchange="switch_curved()">
+        <label for="curved"></label>
+        <div class="caption">Curved</div>
+      </div>
+      <div class="round">
+        <input type="checkbox" id="filled" name=drawFilled  onchange="switch_filled()">
+        <label for="filled"></label>
+        <div class="caption">Filled</div>
+      </div>
+      <div class="round">
+        <input type="checkbox" id="text" name=drawText  onchange="switch_text()">
+        <label for="text"></label>
+        <div class="caption">Text</div>
+      </div>
+
+    </div>
+    <canvas id="canvas" class="spectrgrm" width="1024" height="200"></canvas>
+    <div class="playback-ctrl">
+      <div class="playpause">
+        <input type="button" onclick="play_pause()" value="Play"></input>
+      </div>
+      <div class="progress-bar">
+        <div style="width: 27%" class="progress-bar__line"></div>
+        <div class="progress-bar__time">1:32 / 3:42</div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="./js/visualizer.js"></script>
+<script type="text/javascript" src="./js/common.js"></script>
+</body>
+</html>

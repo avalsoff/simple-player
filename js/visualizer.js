@@ -50,7 +50,7 @@ function initializeVisualizer(canvasElement, audioElement) {
 function updateSongText(newText) {
   songText = newText;
   if (canvasContext)
-    textSize = canvasContext.measureText(songText);
+  textSize = canvasContext.measureText(songText);
 }
 
 function setupAudioApi(audioElement) {
@@ -70,10 +70,10 @@ function setupAudioApi(audioElement) {
   }
   createLookupTable(audioAnalyserNode.frequencyBinCount, logBinLengths, logLookupTable);
   binWidth = Math.ceil(canvasWidth / (displayBins - 1));
-
+  
   src.connect(audioAnalyserNode);
   audioAnalyserNode.connect(audioContext.destination);
-
+  
   audioVisualizerInitialized = true;
 }
 
@@ -84,30 +84,30 @@ function initCanvas(canvasElement) {
   requestAnimationFrame(paint);
   canvasContext.font = songFont;
   canvasContext.strokeStyle = barColour;
-
+  
   textSize = canvasContext.measureText(songText);
 }
 
 //Render some fancy bars
 function paint() {
   requestAnimationFrame(paint);
-
+  
   if(!audioVisualizerInitialized)
-    return;
-
+  return;
+  
   canvasContext.fillStyle = backgroundColour;
   canvasContext.fillRect(0, 0, canvasWidth, canvasHeight);
-
+  
   let bins = audioAnalyserNode.frequencyBinCount;
   let data = new Uint8Array(bins);
   audioAnalyserNode.getByteFrequencyData(data);
   canvasContext.fillStyle = barColour;
-
+  
   if (drawPitch)
-    updateBinsLog(logLookupTable, data);
+  updateBinsLog(logLookupTable, data);
   else
-    updateBins(bins, logBinLengths, data);
-
+  updateBins(bins, logBinLengths, data);
+  
   if (!drawCurved) {
     for (let i = 0; i < displayBins; i++) {
       paintSingleBin(i);
@@ -122,13 +122,13 @@ function paint() {
       var thisX = i * binWidth;
       var nextX = (i + logBinLengths[i]) * binWidth; //First subbin of the next bin
       var x = (thisX + nextX) / 2;
-
+      
       var thisY = canvasHeight - getBinHeight(i);
       var nextY = canvasHeight - getBinHeight(i + logBinLengths[i]);
       var y = (thisY + nextY) / 2;
-
+      
       canvasContext.quadraticCurveTo(thisX, thisY, x, y);
-
+      
       i += logBinLengths[i];
     }
     canvasContext.quadraticCurveTo(i * binWidth, canvasHeight - getBinHeight(i), (i + 1) * binWidth, canvasHeight - getBinHeight(i + 1));
@@ -140,7 +140,7 @@ function paint() {
       canvasContext.stroke();
     }
   }
-
+  
   if (drawText) {
     songText = player.currentTime;
     canvasContext.fillStyle = 'white';
@@ -152,8 +152,8 @@ function paint() {
 //Inclusive lower, exclusive upper except with stop == start
 function averageRegion(data, start, stop) {
   if (stop <= start)
-    return data[start];
-
+  return data[start];
+  
   let sum = 0;
   for (let i = start; i < stop; i++) {
     sum += data[i];
@@ -183,13 +183,13 @@ function createLookupTable(bins, binLengths, lookupTable) {
       let binIndex = Math.floor(bins * thisFreq / 22050);
       lookupTable[i] = binIndex;
       currentLength++;
-
+      
       if (binIndex != lastBinIndex) {
         for (let j = 0; j < currentLength; j++)
-          binLengths.push(currentLength);
+        binLengths.push(currentLength);
         currentLength = 0;
       }
-
+      
       lastBinIndex = binIndex;
     }
   } else {
@@ -207,7 +207,7 @@ function updateBinsLog(lookupTable, data) {
 
 function getBinHeight(i) {
   let binValue = finalBins[i];
-
+  
   //Pretty much any volume will push it over [floorLevel] so we set that as the bottom threshold
   //I suspect I should be doing a logarithmic space for the volume as well
   let height = Math.max(0, (binValue - floorLevel));
@@ -252,10 +252,10 @@ function switch_text(){
   }
 }
 function switch_play_button() {
-  if (document.getElementById('play_toggle').value == "▶️"){
-    document.getElementById('play_toggle').value = "⏸️"
+  if (document.getElementById('play_toggle').value == "▶"){
+    document.getElementById('play_toggle').value = "⏸"
   }else{
-    document.getElementById('play_toggle').value = "▶️"
+    document.getElementById('play_toggle').value = "▶"
   }
 }
 
@@ -275,15 +275,15 @@ function fmt(int) {
   } else {
     return int.toString()
   }
-
+  
 }
 
 function progress_bar_show() {
-    progress = player.currentTime / player.duration * 100
-    document.getElementById('rangeinput').value = progress;
-    var minutes = Math.floor(player.currentTime / 60);
-    var seconds = Math.floor(player.currentTime - minutes * 60);
-    document.getElementById('progress-bar__time').innerHTML = fmt(minutes) + ' : ' + fmt(seconds);
+  progress = player.currentTime / player.duration * 100
+  document.getElementById('rangeinput').value = progress;
+  var minutes = Math.floor(player.currentTime / 60);
+  var seconds = Math.floor(player.currentTime - minutes * 60);
+  document.getElementById('progress-bar__time').innerHTML = fmt(minutes) + ' : ' + fmt(seconds);
 }
 
 function progress_bar_seek(value){

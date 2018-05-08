@@ -1,7 +1,7 @@
 //Note: bins needs to be a power of 2
 let displayBins = 512;
-let backgroundColour = "#2C2E3B";
-let barColour = "#EC1A55";
+let backgroundColour = "#444";
+let barColour = "#ccc";
 let songFont = "15px 'VT323'";
 //Where the bottom of the waveform is rendered at (out of 255). I recommend
 //leaving it at 96 since it seems to work well, basically any volume will push
@@ -11,9 +11,9 @@ let floorLevel = 96;
 //Whether to draw the frequencies directly, or scale the x-axis logarithmically and show pitch instead.
 let drawPitch = true;
 //Whether to draw the visualisation as a curve instead of discrete bars
-let drawCurved = true;
+let drawCurved = false;
 //If drawCurved is enabled, this flag fills the area beneath the curve (the same colour as the line)
-let drawFilled = false;
+let drawFilled = true;
 //Whether to draw text the songText on top of the visualisation
 let drawText = false;
 
@@ -55,7 +55,8 @@ function updateSongText(newText) {
 
 function setupAudioApi(audioElement) {
   let src = audioContext.createMediaElementSource(audioElement);
-
+  setInterval(progress_bar_show, 500);
+  switch_play_button()
   audioAnalyserNode = audioContext.createAnalyser();
   //FFT node takes in 2 samples per bin, and we internally use 2 samples per bin
   audioAnalyserNode.fftSize = drawPitch ? displayBins * 8 : displayBins * 2;
@@ -250,10 +251,42 @@ function switch_text(){
     drawText = false;
   }
 }
+function switch_play_button() {
+  if (document.getElementById('play_toggle').value == "▶️"){
+    document.getElementById('play_toggle').value = "⏸️"
+  }else{
+    document.getElementById('play_toggle').value = "▶️"
+  }
+}
+
+
 function play_pause() {
   if (player.paused == true) {
     player.play()
   }else{
     player.pause()
   }
+  switch_play_button()
+}
+
+function fmt(int) {
+  if (int.toString().length == 1) {
+    return '0' + int.toString()
+  } else {
+    return int.toString()
+  }
+
+}
+
+function progress_bar_show() {
+    progress = player.currentTime / player.duration * 100
+    document.getElementById('rangeinput').value = progress;
+    var minutes = Math.floor(player.currentTime / 60);
+    var seconds = Math.floor(player.currentTime - minutes * 60);
+    document.getElementById('progress-bar__time').innerHTML = fmt(minutes) + ' : ' + fmt(seconds);
+}
+
+function progress_bar_seek(value){
+  seek_point = player.duration * value/100;
+  player.currentTime = seek_point;
 }
